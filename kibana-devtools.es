@@ -282,6 +282,15 @@ GET /bank/_search
   "size": 10
 }
 
+GET /airbnb/_search
+{
+  "query": { "match_all": {} },
+  "sort": [
+    { "price": "asc" }
+  ],
+  "size": 10000
+}
+
 GET /bank/_search
 {
   "query": { "match": { "address": "mill lane" } }
@@ -621,16 +630,26 @@ PUT airbnb
         "type": "integer"
       },
       "name":{
-        "type": "text"
+       "type": "text",
+             "fields": {
+               "keyword": {
+                 "type": "keyword"
+               }
+             }
       },
       "host_id":{
         "type": "integer"
       },
       "neighbourhood_group":{
-         "type": "text"
+         "type": "keyword"
     },
       "neighbourhood": {
-        "type": "text"
+       "type": "text",
+             "fields": {
+               "keyword": {
+                 "type": "keyword"
+               }
+             }
       },
       "latitude": {
         "type": "float"
@@ -642,7 +661,12 @@ PUT airbnb
         "type": "geo_point"
       },
       "room_type":{
-        "type": "text"
+       "type": "text",
+             "fields": {
+               "keyword": {
+                 "type": "keyword"
+               }
+             }
       },
       "price":{
         "type": "float"
@@ -672,6 +696,7 @@ PUT airbnb
 }
 
 # 3 - house prices vs square feet 
+DELETE houseprices
 PUT houseprices
 {
   "mappings": {
